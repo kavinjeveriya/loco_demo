@@ -29,7 +29,9 @@ phases:
       - git config --global user.email "kavinjaveriya@gmail.com"
       - git config --global user.name "kavinjeveriya"
       - echo $CODEBUILD_SRC_DIR
-      - git clone https://github.com/kavinjeveriya/loco_devops.git  $CODEBUILD_SRC_DIR/../..
+      - git clone https://github.com/kavinjeveriya/loco_devops.git
+      - cd loco_devops
+      - pwd
       - $FILE_PATH=$CODEBUILD_SRC_DIR../../loco_devops/locodemoapp/values.yml
       - awk -v new_tag="$IMAGE_TAG" '/^tag:/{sub($2, new_tag)}1' $FILE_PATH > temp && mv -f temp $FILE_PATH
       - git add .
