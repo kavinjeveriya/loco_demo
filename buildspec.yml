@@ -37,10 +37,10 @@ phases:
       - ls 
       - FILE_PATH=$CODEBUILD_SRC_DIR/loco_devops/locodemoapp/values.yaml
       - awk -v new_tag="$IMAGE_TAG" '/^tag:/{sub($2, new_tag)}1' $FILE_PATH > temp && mv -f temp $FILE_PATH
-      - # cat awk_log.txt
+      - cat $FILE_PATH
       - git add .
       - git status
-      - git commit -m "changing image tag according commit $COMMIT_HASH !!!" $FILE_PATH 
+      - git commit -m "changing image tag according commit !!!" $FILE_PATH 
       - git push origin locohelm  # Or the branch you want to push to
 artifacts:
      files: '**/*'
