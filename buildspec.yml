@@ -36,7 +36,8 @@ phases:
       - git checkout locohelm
       - ls 
       - FILE_PATH=$CODEBUILD_SRC_DIR/loco_devops/locodemoapp/values.yml
-      - awk -v new_tag="$IMAGE_TAG" '/^tag:/{sub($2, new_tag)}1' $FILE_PATH > temp && mv -f temp $FILE_PATH
+      - awk -v new_tag="$IMAGE_TAG" '/^tag:/{sub($2, new_tag)}1' $FILE_PATH > temp && mv -f temp $FILE_PATH 2>&1 | tee awk_log.txt
+      - cat awk_log.txt
       - git add .
       - git commit -m "changing image tag according commit $COMMIT_HASH !!!"
       - git push origin locohelm  # Or the branch you want to push to
