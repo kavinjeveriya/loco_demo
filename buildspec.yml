@@ -40,9 +40,7 @@ phases:
       - # cat awk_log.txt
       - git add .
       - git status
-      - git commit -m "changing image tag according commit $COMMIT_HASH !!!" $FILE_PATH 2>&1 | tee git_commit_log.txt
-      - cat git_commit_log.txt
-      - git commit -m "changing image tag according commit $COMMIT_HASH !!!"  $FILE_PATH
+      - git commit -m "changing image tag according commit $COMMIT_HASH !!!" $FILE_PATH 
       - git push origin locohelm  # Or the branch you want to push to
 artifacts:
      files: '**/*'
