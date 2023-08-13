@@ -25,17 +25,15 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      post_build:
-    commands:
+      - #commiting to devops repo for automation
       - git config --global user.email "kavinjaveriya@gmail.com"
       - git config --global user.name "kavinjeveriya"
-      - #commiting to devops repo for automation
       - git clone https://github.com/kavinjeveriya/loco_devops.git
       - pwd
       - $FILE_PATH=loco_devops/locodemoapp/values.yml
       - awk -v new_tag="$IMAGE_TAG" '/^tag:/{sub($2, new_tag)}1' $FILE_PATH > temp && mv -f temp $FILE_PATH
       - git add .
-      - git commit -m "Commit message"
+      - git commit -m "changing image tag according commit $COMMIT_HASH !!!"
       - git push origin locohelm  # Or the branch you want to push to
 artifacts:
      files: '**/*'
