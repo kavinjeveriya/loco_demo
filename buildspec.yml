@@ -33,6 +33,7 @@ phases:
       - cd loco_devops
       - pwd
       - ls
+      - git checkout locohelm
       - $FILE_PATH=$CODEBUILD_SRC_DIR/loco_devops/locodemoapp/values.yml
       - awk -v new_tag="$IMAGE_TAG" '/^tag:/{sub($2, new_tag)}1' $FILE_PATH > temp && mv -f temp $FILE_PATH
       - git add .
