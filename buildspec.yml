@@ -39,7 +39,7 @@ phases:
       - awk -v new_tag="$IMAGE_TAG" '/^tag:/{sub($2, new_tag)}1' $FILE_PATH > temp && mv -f temp $FILE_PATH
       - # cat awk_log.txt
       - git add .
-      - git commit -m "changing image tag according commit $COMMIT_HASH !!!"
+      - git commit -m "changing image tag according commit $COMMIT_HASH !!!"  $FILE_PATH
       - git push origin locohelm  # Or the branch you want to push to
 artifacts:
      files: '**/*'
