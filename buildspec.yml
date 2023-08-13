@@ -36,7 +36,6 @@ phases:
       - git checkout locohelm
       - ls 
       - FILE_PATH=$CODEBUILD_SRC_DIR/loco_devops/locodemoapp/values.yaml
-      - # NEW_TAG=$IMAGE_TAG
       - sed -i "s/tag: .*/tag: $IMAGE_TAG/" $FILE_PATH
       - # awk -v new_tag="$IMAGE_TAG" '/^tag:/{sub($2, new_tag)}1' $FILE_PATH > temp && mv -f temp $FILE_PATH
       - cat $FILE_PATH
