@@ -26,8 +26,8 @@ phases:
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - #commiting to devops repo for automation
-      - #git config --global user.email "kavinjaveriya@gmail.com"
-      - #git config --global user.name "kavinjeveriya"
+      - git config --global user.email "kavinjaveriya@gmail.com"
+      - git config --global user.name "kavinjeveriya"
       - echo $CODEBUILD_SRC_DIR
       - git clone https://github.com/kavinjeveriya/loco_devops.git
       - cd loco_devops
