@@ -28,6 +28,8 @@ phases:
       - #commiting to devops repo for automation
       - echo $CODEBUILD_SRC_DIR
       - git clone https://github.com/kavinjeveriya/loco_devops.git
+      - git config --global user.email "kavinjaveriya@gmail.com"
+      - git config --global user.name "kavinjeveriya"
       - cd loco_devops
       - git checkout locohelm
       - FILE_PATH=$CODEBUILD_SRC_DIR/loco_devops/locodemoapp/values.yaml
@@ -36,8 +38,6 @@ phases:
       - git add .
       - git status
       - git commit -m "changing image tag according commit $COMMIT_HASH !!!" $FILE_PATH 
-      - git config --global user.email "kavinjaveriya@gmail.com"
-      - git config --global user.name "kavinjeveriya"
       - git remote set-url origin https://kavinjeveriya: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@github.com/kavinjeveriya/loco_devops.git
       - git push origin locohelm # Or the branch you want to push to
 artifacts:
