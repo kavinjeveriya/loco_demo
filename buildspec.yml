@@ -29,7 +29,6 @@ phases:
       - git config --global user.email "kavinjaveriya@gmail.com"
       - git config --global user.name "kavinjeveriya"
       - echo $CODEBUILD_SRC_DIR
-      - git clone git@github.com:kavinjeveriya/loco_demo.git
       - git clone https://github.com/kavinjeveriya/loco_devops.git
       - cd loco_devops
       - pwd
@@ -44,6 +43,7 @@ phases:
       - git status
       - git commit -m "changing image tag according commit $COMMIT_HASH !!!" $FILE_PATH 
       - git remote -v 
+      - git remote add origin https://kavinjeveriya@github.com/kavinjeveriya/loco_devops.git
       - git config --global user.email "kavinjaveriya@gmail.com"
       - git config --global user.name "kavinjeveriya"
       - git push origin locohelm --verbose # Or the branch you want to push to
