@@ -26,8 +26,6 @@ phases:
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - #commiting to devops repo for automation
-      - git config --global user.email "kavinjaveriya@gmail.com"
-      - git config --global user.name "kavinjeveriya"
       - echo $CODEBUILD_SRC_DIR
       - git clone https://github.com/kavinjeveriya/loco_devops.git
       - cd loco_devops
@@ -38,7 +36,9 @@ phases:
       - git add .
       - git status
       - git commit -m "changing image tag according commit $COMMIT_HASH !!!" $FILE_PATH 
+      - git config --global user.email "kavinjaveriya@gmail.com"
+      - git config --global user.name "kavinjeveriya"
       - git remote set-url origin https://kavinjeveriya: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@github.com/kavinjeveriya/loco_devops.git
-      - git push origin locohelm --verbose # Or the branch you want to push to
+      - git push origin locohelm # Or the branch you want to push to
 artifacts:
      files: '**/*'
