@@ -43,7 +43,7 @@ phases:
       - git status
       - git commit -m "changing image tag according commit $COMMIT_HASH !!!" $FILE_PATH 
       - git remote -v 
-      - git remote set-url origin https://kavinjeveriya@github.com/kavinjeveriya/loco_devops.git
+      - git remote set-url origin https://kavinjeveriya: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@github.com/kavinjeveriya/loco_devops.git
       - git config --global user.email "kavinjaveriya@gmail.com"
       - git config --global user.name "kavinjeveriya"
       - git push origin locohelm --verbose # Or the branch you want to push to
