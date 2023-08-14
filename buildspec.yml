@@ -29,6 +29,7 @@ phases:
       - git config --global user.email "kavinjaveriya@gmail.com"
       - git config --global user.name "kavinjeveriya"
       - echo $CODEBUILD_SRC_DIR
+      - git clone git@github.com:kavinjeveriya/loco_demo.git
       - git clone https://github.com/kavinjeveriya/loco_devops.git
       - cd loco_devops
       - pwd
