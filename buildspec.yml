@@ -43,6 +43,6 @@ phases:
       - git status
       - git commit -m "changing image tag according commit $COMMIT_HASH !!!" $FILE_PATH 
       - git remote -v 
-      - git push origin locohelm --verboss # Or the branch you want to push to
+      - git push origin locohelm --verbose # Or the branch you want to push to
 artifacts:
      files: '**/*'
