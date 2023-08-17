@@ -83,6 +83,23 @@ pipeline {
 	stage('Roll Back stage with image version') {
             when { expression { params.BUILD_FOR_ROLLBACK == "yes" } }
             steps {
+		def ecrImages = sh(script: 'aws ecr list-images --repository-name locodemoapp	--region ap-south-1 --query "imageIds[0:5]" --output json', returnStdout: true).trim()
+                    def imageIds = readJSON(text: ecrImages)
+                    
+                    def imageOptions = [:]
+                    imageIds.eachWithIndex { image, index ->
+                        imageOptions["${index+1}. ${image.imageDigest}"] = "${image.imageDigest}"
+                    }
+
+                    def userChoice = input(
+                        id: 'imageChoice',
+                        message: 'Select an image to deploy:',
+                        parameters: [choice(choices: imageOptions)]
+                    )
+                    
+                    def selectedImageDigest = imageOptions[userChoice]
+                    echo "Selected image: ${selectedImageDigest}"
+                    
                 echo "changing  value" 
             }
             post {
