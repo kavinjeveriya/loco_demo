@@ -10,8 +10,8 @@ pipeline {
             steps {
                 // getting parameter if build trigger mannual 
                 echo "Build for deployment ${BUILD_FOR_DEPLOYMENT}"
-		echo "Build for hpa ${BUILD_FOR_DEPLOYMENT}"
-		echo "Build for rollback ${BUILD_FOR_DEPLOYMENT}"
+		echo "Build for hpa ${BUILD_FOR_HPA}"
+		echo "Build for rollback ${BUILD_FOR_ROLLBACK}"
             }
             post {
                 failure {
@@ -61,7 +61,7 @@ pipeline {
 	stage('changing value of hpa') {
             when { expression { params.BUILD_FOR_HPA == "yes" } }
             steps {
-		input(message: 'Please provide a HPA value:', ok: 'Continue', parameters: [number(name: 'HPA_VALUE', defaultValue: '', description: 'Enter your value')])
+		input(message: 'Please provide a HPA value:', ok: 'Continue', parameters: [number(name: 'HPA_VALUE', defaultValue: '5', description: 'Enter your value')])
                 echo "changing HPA value ${params.HPA_VALUE}" 
             }
             post {
