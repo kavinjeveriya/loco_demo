@@ -8,7 +8,7 @@ pipeline {
             }
             post {
                 failure {
-                slackSend channel: '#loco_testing', message: "*****Pipeline failed on user input*****"
+                slackSend channel: 'loco_testing', message: "*****Pipeline failed on user input*****"
                 }
             }
         }
