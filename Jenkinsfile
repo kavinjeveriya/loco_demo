@@ -13,7 +13,7 @@ pipeline {
             }
         }
         stage('Building Image') {
-            when { expression { params.BUILD_FOR_DEPLOYMENT == yes } }
+            when { expression { params.BUILD_FOR_DEPLOYMENT == "yes" } }
             steps {
                 sh('''#!/bin/bash
                 echo "echo building image with the container with ${BRANCH}" 
