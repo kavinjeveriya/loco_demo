@@ -67,13 +67,13 @@ pipeline {
                         ok: 'Continue',
                         parameters: [string(name: 'HPA_VALUE', defaultValue: '', description: 'Enter your number')]
                     )
-		    valuehpa = valueHpa
+		    HPA_VALUE = valueHpa
 		    echo "changing HPA value ${valuehpa}"
                 } 
             }
             post {
 		success {
-                slackSend channel: 'loco_testing', message: "*****HPA value Change to ${env.valuehpa}.*****"
+                slackSend channel: 'loco_testing', message: "*****HPA value Change to ${env.HPA_VALUE}.*****"
                 } 
                 failure {
                 slackSend channel: 'loco_testing', message: "*****changing hpa value failure.*****"
