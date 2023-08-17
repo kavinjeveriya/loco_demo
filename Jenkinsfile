@@ -59,11 +59,12 @@ pipeline {
 	stage('changing value of hpa') {
             when { expression { params.BUILD_FOR_HPA == "yes" } }
             steps {
-                echo "changing HPA value" 
+		input(message: 'Please provide a HPA value:', ok: 'Continue', parameters: [string(name: 'HPA_VALUE', defaultValue: '', description: 'Enter your value')])
+                echo "changing HPA value $HAP_VALUE" 
             }
             post {
 		success {
-                slackSend channel: 'loco_testing', message: "*****HPA value Change to this.*****"
+                slackSend channel: 'loco_testing', message: "*****HPA value Change to $HPA_VALUE.*****"
                 } 
                 failure {
                 slackSend channel: 'loco_testing', message: "*****changing hpa value failure.*****"
