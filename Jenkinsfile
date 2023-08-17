@@ -1,5 +1,8 @@
 pipeline {
     agent { label 'master' }
+    parameters {
+        choice(name: 'SKIP_STAGE', choices: ['Yes', 'No'], description: 'Skip this stage?')
+    }
     stages {
         stage('Take Choice From user') {
             steps {
@@ -22,6 +25,45 @@ pipeline {
             post {
                 failure {
                 slackSend channel: 'loco_testing', message: "*****image is not build*****"
+                }
+            }
+        }
+	stage('pushing image to ECR') {
+            when { expression { params.BUILD_FOR_DEPLOYMENT == "yes" } }
+            steps {
+                sh('''#!/bin/bash
+                echo "pushing image to ECR repo ${BRANCH}" 
+		        ''')
+            }
+            post {
+                failure {
+                slackSend channel: 'loco_testing', message: "*****image not pushed.*****"
+                }
+            }
+        }
+	stage('deploying pods on cluster') {
+            when { expression { params.BUILD_FOR_DEPLOYMENT == "yes" } }
+            steps {
+                sh('''#!/bin/bash
+                echo "deploying pods on cluster" 
+		        ''')
+            }
+            post {
+                failure {
+                slackSend channel: 'loco_testing', message: "*****pdos not deployed.*****"
+                }
+            }
+        }
+	stage('changing value of hpa') {
+            when { expression { params.BUILD_FOR_DEPLOYMENT == "no" } }
+            steps {
+                sh('''#!/bin/bash
+                echo "changing HPA value" 
+		        ''')
+            }
+            post {
+                failure {
+                slackSend channel: 'loco_testing', message: "*****changing hpa value.*****"
                 }
             }
         }
