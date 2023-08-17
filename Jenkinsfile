@@ -4,7 +4,7 @@ pipeline {
         stage('Take Choice From user') {
             steps {
                 // getting parameter if build trigger mannual 
-                echo ${BUILD_FOR_DEPLOYMENT}
+                echo "${BUILD_FOR_DEPLOYMENT}"
             }
             post {
                 failure {
