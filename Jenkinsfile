@@ -61,7 +61,7 @@ pipeline {
 	stage('changing value of hpa') {
             when { expression { params.BUILD_FOR_HPA == "yes" } }
             steps {
-		input(message: 'Please provide a HPA value:', ok: 'Continue', parameters: [number(name: 'HPA_VALUE', defaultValue: '5', description: 'Enter your value')])
+		input(message: 'Please provide a HPA value:', ok: 'Continue', parameters: [number(name: 'HPA_VALUE', defaultValue: 5, description: 'Enter your value')])
                 echo "changing HPA value ${params.HPA_VALUE}" 
             }
             post {
