@@ -57,7 +57,7 @@ pipeline {
             }
         }
 	stage('changing value of hpa') {
-            when { expression { params.BUILD_FOR_HPA == "no" } }
+            when { expression { params.BUILD_FOR_HPA == "yes" } }
             steps {
                 echo "changing HPA value" 
             }
@@ -71,7 +71,7 @@ pipeline {
             }
         }
 	stage('Roll Back stage with image version') {
-            when { expression { params.BUILD_FOR_ROLLBACK == "no" } }
+            when { expression { params.BUILD_FOR_ROLLBACK == "yes" } }
             steps {
                 echo "changing  value" 
             }
