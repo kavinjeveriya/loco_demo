@@ -98,13 +98,14 @@ pipeline {
                         message: 'Select an image to deploy:',
                         parameters: [choice(name: 'IMAGE_TAG', choices: options, description: 'choose any image for rollback')]
                     )
-                    def userinput = userInput
-                    echo "${userinput}"
+                    echo "${userInput}"
                  }
             }
             post {
 		success {
-                slackSend channel: 'loco_testing', message: "*****ROLLBACK sucessful with image version ${userinput}.*****"
+			script {
+                slackSend channel: 'loco_testing', message: "*****ROLLBACK sucessful with image version ${userInput}.*****"
+			}
                 }   
                 failure {
                 slackSend channel: 'loco_testing', message: "*****Roll back to particualr version failure.*****"
