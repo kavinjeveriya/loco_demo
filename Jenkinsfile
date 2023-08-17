@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'master' }
     parameters {
-        choice(name: 'BUILD_FOR_DEPLOYMENT', choices: ['Yes', 'No'], description: 'Skip this stage?')
+        choice(name: 'BUILD_FOR_DEPLOYMENT', choices: ["yes", "no"], description: 'Skip this stage?')
     }
     stages {
         stage('Take Choice From user') {
