@@ -86,7 +86,8 @@ pipeline {
             when { expression { params.BUILD_FOR_ROLLBACK == "yes" } }
             steps {
 		 script {
-                    def ecrImages = sh(script: 'aws ecr list-images --repository-name locodemoapp --region ap-south-1 --query "imageIds[0:5]" --output json', returnStdout: true).trim()
+		    def ecrImages = sh(script: 'aws ecr describe-images --repository-name locodemoapp --region ap-south-1 --output json --query 'sort_by(imageDetails,& imagePushedAt)[-5:] | reverse(@)', returnStdout: true).trim()
+                  //  def ecrImages = sh(script: 'aws ecr list-images --repository-name locodemoapp --region ap-south-1 --query "imageIds[0:5]" --output json', returnStdout: true).trim()
                     def imageIds = readJSON text: ecrImages
                     echo "${imageIds}"
                     def options = imageIds.collect { it.imageTag }
