@@ -67,9 +67,9 @@ pipeline {
                         ok: 'Continue',
                         parameters: [string(name: 'HPA_VALUE', defaultValue: '', description: 'Enter your number')]
                     )
-                    echo "changing HPA value ${params.HPAVALUE}"
+                    echo "changing HPA value ${HPAVALUE}"
                 } 
-		    echo "changing HPA value ${params.HPAVALUE}"
+		    echo "changing HPA value ${HPAVALUE}"
             }
             post {
 		success {
@@ -83,28 +83,25 @@ pipeline {
 	stage('Roll Back stage with image version') {
             when { expression { params.BUILD_FOR_ROLLBACK == "yes" } }
             steps {
-		def ecrImages = sh(script: 'aws ecr list-images --repository-name locodemoapp	--region ap-south-1 --query "imageIds[0:5]" --output json', returnStdout: true).trim()
-                    def imageIds = readJSON(text: ecrImages)
-                    
-                    def imageOptions = [:]
-                    imageIds.eachWithIndex { image, index ->
-                        imageOptions["${index+1}. ${image.imageDigest}"] = "${image.imageDigest}"
-                    }
+		 script {
+                    def ecrImages = sh(script: 'aws ecr list-images --repository-name locodemoapp --region ap-south-1 --query "imageIds[0:5]" --output json', returnStdout: true).trim()
+                    def imageIds = readJSON text: ecrImages
+                    echo "${imageIds}"
+                    def options = imageIds.collect { it.imageTag }
 
-                    def userChoice = input(
+                    echo "Image Tags: ${options}"
+                    def userInput = input(
                         id: 'imageChoice',
+                        ok: 'Continue',
                         message: 'Select an image to deploy:',
-                        parameters: [choice(choices: imageOptions)]
+                        parameters: [choice(name: 'IMAGE_TAG', choices: options, description: 'choose any image for rollback')]
                     )
-                    
-                    def selectedImageDigest = imageOptions[userChoice]
-                    echo "Selected image: ${selectedImageDigest}"
-                    
-                echo "changing  value" 
+                    echo "${userInput}"
+                 }
             }
             post {
 		success {
-                slackSend channel: 'loco_testing', message: "*****Roll back to particualr version successfule.*****"
+                slackSend channel: 'loco_testing', message: "*****ROLLBACK sucessful with image version ${userInput}.*****"
                 }   
                 failure {
                 slackSend channel: 'loco_testing', message: "*****Roll back to particualr version failure.*****"
