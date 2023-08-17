@@ -67,7 +67,7 @@ pipeline {
                         ok: 'Continue',
                         parameters: [string(name: 'HPA_VALUE', defaultValue: '', description: 'Enter your number')]
                     )
-			def valuehpa = valueHpa
+		    valuehpa = valueHpa
 		    echo "changing HPA value ${valuehpa}"
                 } 
             }
