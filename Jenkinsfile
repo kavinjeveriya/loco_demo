@@ -4,13 +4,31 @@ pipeline {
         stage('Take Choice From user') {
             steps {
                 // getting parameter if build trigger mannual 
-                echo "${BUILD_FOR_DEPLOYMENT}"
+                echo ${BUILD_FOR_DEPLOYMENT}
             }
             post {
-                always {
-                slackSend channel: 'loco_testing', message: "*****Pipeline failed on user input*****"
+                failure {
+                slackSend channel: 'loco_testing', message: "*****Pipeline failed on user inpi*****"
                 }
             }
+        }
+        stage('Building Image') {
+            when { expression { params.BUILD_FOR_DEPLOYMENT == yes } }
+            steps {
+                sh('''#!/bin/bash
+                echo "echo building image with the container with ${BRANCH}" 
+		        ''')
+            }
+            post {
+                failure {
+                slackSend channel: 'loco_testing', message: "*****image is not build*****"
+                }
+            }
+        }
+    }
+    post {
+        always {
+            notifySlack(currentBuild.currentResult)
         }
     }
 }
