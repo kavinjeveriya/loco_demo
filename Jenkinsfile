@@ -68,7 +68,7 @@ pipeline {
                         parameters: [string(name: 'HPA_VALUE', defaultValue: '', description: 'Enter your number')]
                     )
 		    HPA_VALUE = valueHpa
-		    echo "changing HPA value ${valuehpa}"
+		    echo "changing HPA value ${HPA_VALUE}"
                 } 
             }
             post {
