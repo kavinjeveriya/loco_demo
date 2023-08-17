@@ -89,7 +89,7 @@ pipeline {
                     def ecrImages = sh(script: 'aws ecr list-images --repository-name locodemoapp --region ap-south-1 --query "imageIds[0:5]" --output json', returnStdout: true).trim()
                     def imageIds = readJSON text: ecrImages
                     echo "${imageIds}"
-                    def options = imageIds.collect { it.imageTag[0] }
+                    def options = imageIds.collect { it.imageTag }
 
                     echo "Image Tags: ${options}"
                     def userInput = input(
