@@ -67,13 +67,13 @@ pipeline {
                         ok: 'Continue',
                         parameters: [string(name: 'HPA_VALUE', defaultValue: '', description: 'Enter your number')]
                     )
-                    echo "changing HPA value ${valueHpa}"
                 } 
-		    echo "changing HPA value ${valueHpa}"
+		    def valuehpa = valueHpa
+		    echo "changing HPA value ${valuehpa}"
             }
             post {
 		success {
-                slackSend channel: 'loco_testing', message: "*****HPA value Change to ${params.HPAVALUE}.*****"
+                slackSend channel: 'loco_testing', message: "*****HPA value Change to ${valuehpa}.*****"
                 } 
                 failure {
                 slackSend channel: 'loco_testing', message: "*****changing hpa value failure.*****"
@@ -96,12 +96,13 @@ pipeline {
                         message: 'Select an image to deploy:',
                         parameters: [choice(name: 'IMAGE_TAG', choices: options, description: 'choose any image for rollback')]
                     )
-                    echo "${userInput}"
+                    def userinput = userInput
+                    echo "${userinput}"
                  }
             }
             post {
 		success {
-                slackSend channel: 'loco_testing', message: "*****ROLLBACK sucessful with image version ${userInput}.*****"
+                slackSend channel: 'loco_testing', message: "*****ROLLBACK sucessful with image version ${userinput}.*****"
                 }   
                 failure {
                 slackSend channel: 'loco_testing', message: "*****Roll back to particualr version failure.*****"
