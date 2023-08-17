@@ -73,7 +73,7 @@ pipeline {
             }
             post {
 		success {
-                slackSend channel: 'loco_testing', message: "*****HPA value Change to ${valuehpa}.*****"
+                slackSend channel: 'loco_testing', message: "*****HPA value Change to ${env.valuehpa}.*****"
                 } 
                 failure {
                 slackSend channel: 'loco_testing', message: "*****changing hpa value failure.*****"
