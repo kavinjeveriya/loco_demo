@@ -62,14 +62,14 @@ pipeline {
             when { expression { params.BUILD_FOR_HPA == "yes" } }
             steps {
 		script {
-                    def HPAVALUE = input(
+                    def valueHpa = input(
                         message: 'Please provide a number:',
                         ok: 'Continue',
                         parameters: [string(name: 'HPA_VALUE', defaultValue: '', description: 'Enter your number')]
                     )
-                    echo "changing HPA value ${HPAVALUE}"
+                    echo "changing HPA value ${valueHpa}"
                 } 
-		    echo "changing HPA value ${HPAVALUE}"
+		    echo "changing HPA value ${valueHpa}"
             }
             post {
 		success {
