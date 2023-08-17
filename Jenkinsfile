@@ -7,7 +7,7 @@ pipeline {
                 echo "${BUILD_FOR_DEPLOYMENT}"
             }
             post {
-                failure {
+                always {
                 slackSend channel: 'loco_testing', message: "*****Pipeline failed on user input*****"
                 }
             }
