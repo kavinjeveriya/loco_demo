@@ -1,7 +1,9 @@
 pipeline {
     agent { label 'master' }
     parameters {
-        choice(name: 'BUILD_FOR_DEPLOYMENT', choices: ["yes", "no"], description: 'Skip this stage?')
+        choice(name: 'BUILD_FOR_DEPLOYMENT', choices: ["yes", "no"], description: 'When no, Skip deployment stage')
+	choice(name: 'BUILD_FOR_HPA', choices: ["no", "yes"], description: 'When no, Skip hpa stages')
+	choice(name: 'BUILD_FOR_ROLLBACK', choices: ["no", "yes"], description: 'When no, Skip rollback stages')
     }
     stages {
         stage('Take Choice From user') {
@@ -55,15 +57,30 @@ pipeline {
             }
         }
 	stage('changing value of hpa') {
-            when { expression { params.BUILD_FOR_DEPLOYMENT == "no" } }
+            when { expression { params.BUILD_FOR_HPA == "no" } }
             steps {
-                sh('''#!/bin/bash
                 echo "changing HPA value" 
-		        ''')
             }
             post {
+		success {
+                slackSend channel: 'loco_testing', message: "*****HPA value Change to this.*****"
+                } 
                 failure {
-                slackSend channel: 'loco_testing', message: "*****changing hpa value.*****"
+                slackSend channel: 'loco_testing', message: "*****changing hpa value failure.*****"
+                }
+            }
+        }
+	stage('Roll Back stage with image version') {
+            when { expression { params.BUILD_FOR_ROLLBACK == "no" } }
+            steps {
+                echo "changing  value" 
+            }
+            post {
+		success {
+                slackSend channel: 'loco_testing', message: "*****Roll back to particualr version successfule.*****"
+                }   
+                failure {
+                slackSend channel: 'loco_testing', message: "*****Roll back to particualr version failure.*****"
                 }
             }
         }
