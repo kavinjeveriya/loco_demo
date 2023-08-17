@@ -70,8 +70,6 @@ pipeline {
 			def valuehpa = valueHpa
 		    echo "changing HPA value ${valuehpa}"
                 } 
-		    def valuehpa = valueHpa
-		    echo "changing HPA value ${valuehpa}"
             }
             post {
 		success {
