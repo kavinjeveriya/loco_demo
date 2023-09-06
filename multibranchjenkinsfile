@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    environment {
+       APP="DEV"
+       ENV="DEV"
+       NAME="MUKUL"
+       GIT_COMMIT= "${env.GIT_COMMIT}"
+}
+
+    stages {
+        stage('Image Building') {
+            steps {
+                
+                sh "sudo docker build -t firstimage:${GIT_COMMIT} ."
+            }
+        }
+        stage('Image push') {
+            steps {
+                sh "echo image pushed to docker hub"
+            }
+        }
+        stage('Container Deploy') {
+            steps {
+                sh """
+                if sudo docker ps -a | grep firstcontainer
+                then
+                sudo docker rm -f firstcontainer 
+                sudo docker run -dit --name firstcontainer  -p 7000:7000 firstimage:${GIT_COMMIT}
+                else
+                sudo docker run -dit --name firstcontainer  -p 7000:7000 firstimage:${GIT_COMMIT}
+                fi
+                """
+            }
+        }
+    }
+}
