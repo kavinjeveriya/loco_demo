@@ -1,9 +1,21 @@
+def portno
+if (BRANCH_NAME == "prod") {
+portno=7001
+}
+else if (BRANCH_NAME == "stage") {
+portno=7002
+}
+else if (BRANCH_NAME == "dev") {
+portno=7003
+}
+
 pipeline {
     agent any
     environment {
        APP="DEV"
        ENV="$BRANCH_NAME"
        NAME="MUKUL"
+       PORT_NO="$portno"
        GIT_COMMIT= "$GIT_COMMIT"
 }
 
@@ -11,6 +23,7 @@ pipeline {
         stage('Image Building') {
             steps {
                 sh " echo $BRANCH_NAME"
+                sh " echo $PORT_NO"
                 sh "sudo docker build -t firstimage:$ENV.$GIT_COMMIT ."
             }
         }
@@ -25,9 +38,9 @@ pipeline {
                 if sudo docker ps -a | grep $ENV-firstcontainer 
                 then
                 sudo docker rm -f $ENV-firstcontainer 
-                sudo docker run -dit --name $ENV-firstcontainer   firstimage:$ENV.$GIT_COMMIT
+                sudo docker run -dit --name $ENV-firstcontainer  -p $PORT_NO:7000 firstimage:$ENV.$GIT_COMMIT
                 else
-                sudo docker run -dit --name $ENV-firstcontainer  firstimage:$ENV.$GIT_COMMIT
+                sudo docker run -dit --name $ENV-firstcontainer  -p $PORT_NO:7000 firstimage:$ENV.$GIT_COMMIT
                 fi
                 """
             }
