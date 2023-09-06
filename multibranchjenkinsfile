@@ -15,7 +15,7 @@ pipeline {
        APP="DEV"
        ENV="$BRANCH_NAME"
        NAME="MUKUL"
-       PORT_NO="$portno"
+       PORT_NO="${portno}"
        GIT_COMMIT= "$GIT_COMMIT"
 }
 
