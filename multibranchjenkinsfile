@@ -8,21 +8,9 @@ pipeline {
 }
 
     stages {
-        stage('SCM Clone') {
-            steps {
-            //    git branch: 'main', credentialsId: 'gitcredsforkavin', url: 'https://github.com/kavinjeveriya/testing_private.git'
-                git branch: 'main', url: 'https://github.com/kavinjeveriya/loco_demo.git'
-                sh 'echo ${GIT_COMMIT}'
-                sh """ls
-                pwd
-                printenv
-                date
-                """
-            }
-        }
         stage('Image Building') {
             steps {
-                
+                sh " echo $env.BRANCH_NAME "
                 sh "sudo docker build -t firstimage:${GIT_COMMIT} ."
             }
         }
