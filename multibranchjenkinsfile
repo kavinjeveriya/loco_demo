@@ -1,9 +1,21 @@
+def portno
+if (BRANCH_NAME == prod) {
+PORT_NO=7001
+}
+else if (BRANCH_NAME == stage) {
+PORT_NO=7002
+}
+else if (BRANCH_NAME == dev) {
+PORT_NO=7003
+}
+
 pipeline {
     agent any
     environment {
        APP="DEV"
        ENV="$BRANCH_NAME"
        NAME="MUKUL"
+       PORT_NO="$portno"
        GIT_COMMIT= "$GIT_COMMIT"
 }
 
@@ -11,6 +23,7 @@ pipeline {
         stage('Image Building') {
             steps {
                 sh " echo $BRANCH_NAME"
+                sh " echo "$PORT_NO"
                 sh "sudo docker build -t firstimage:$ENV.$GIT_COMMIT ."
             }
         }
