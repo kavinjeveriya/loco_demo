@@ -4,14 +4,14 @@ pipeline {
        APP="DEV"
        ENV="DEV"
        NAME="MUKUL"
-       GIT_COMMIT= "${env.GIT_COMMIT}"
+       GIT_COMMIT= "$GIT_COMMIT"
 }
 
     stages {
         stage('Image Building') {
             steps {
-                sh " echo $env.BRANCH_NAME "
-                sh "sudo docker build -t firstimage:${GIT_COMMIT} ."
+                sh " echo $BRANCH_NAME"
+                sh "sudo docker build -t firstimage:$ENV.$GIT_COMMIT ."
             }
         }
         stage('Image push') {
@@ -22,12 +22,12 @@ pipeline {
         stage('Container Deploy') {
             steps {
                 sh """
-                if sudo docker ps -a | grep firstcontainer
+                if sudo docker ps -a | grep $ENV-firstcontainer 
                 then
-                sudo docker rm -f firstcontainer 
-                sudo docker run -dit --name firstcontainer  -p 7000:7000 firstimage:${GIT_COMMIT}
+                sudo docker rm -f $ENV-firstcontainer 
+                sudo docker run -dit --name $ENV-firstcontainer  -p 7000:7000 firstimage:$ENV.$GIT_COMMIT
                 else
-                sudo docker run -dit --name firstcontainer  -p 7000:7000 firstimage:${GIT_COMMIT}
+                sudo docker run -dit --name $ENV-firstcontainer   -p 7000:7000 firstimage:$ENV.$GIT_COMMIT
                 fi
                 """
             }
