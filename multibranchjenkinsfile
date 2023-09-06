@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
        APP="DEV"
-       ENV="DEV"
+       ENV="$BRANCH_NAME"
        NAME="MUKUL"
        GIT_COMMIT= "$GIT_COMMIT"
 }
