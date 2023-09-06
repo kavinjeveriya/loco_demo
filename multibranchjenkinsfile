@@ -23,7 +23,7 @@ pipeline {
         stage('Image Building') {
             steps {
                 sh " echo $BRANCH_NAME"
-                sh " echo "$PORT_NO"
+                sh " echo $PORT_NO"
                 sh "sudo docker build -t firstimage:$ENV.$GIT_COMMIT ."
             }
         }
