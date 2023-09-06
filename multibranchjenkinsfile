@@ -1,12 +1,12 @@
 def portno
-if (BRANCH_NAME == prod) {
-PORT_NO=7001
+if (BRANCH_NAME == "prod") {
+portno=7001
 }
-else if (BRANCH_NAME == stage) {
-PORT_NO=7002
+else if (BRANCH_NAME == "stage") {
+portno=7002
 }
-else if (BRANCH_NAME == dev) {
-PORT_NO=7003
+else if (BRANCH_NAME == "dev") {
+portno=7003
 }
 
 pipeline {
@@ -15,7 +15,7 @@ pipeline {
        APP="DEV"
        ENV="$BRANCH_NAME"
        NAME="MUKUL"
-       PORT_NO="${portno}"
+       PORT_NO="$portno"
        GIT_COMMIT= "$GIT_COMMIT"
 }
 
