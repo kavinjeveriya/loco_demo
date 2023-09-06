@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Image Building') {
             steps {
-                
+                sh " echo $BRANCH_NAME"
                 sh "sudo docker build -t firstimage:${GIT_COMMIT} ."
             }
         }
